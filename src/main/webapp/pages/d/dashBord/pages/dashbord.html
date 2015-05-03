@@ -1,0 +1,25 @@
+<div ng-controller="dashBordCntrl">
+
+    <h1>Nombre Véhicule Par Route</h1>
+    <button ng-click="onclickfunction()" value="click" > click</button>
+    <div ng-repeat="item in carRoad">
+
+        <p>{{item.road}} {{item.count}}</p>
+
+    </div>
+</div>
+
+
+
+<div ng-controller="carRoadCountCntrl">
+    <h1>vitesse</h1>
+    <button ng-click="onclickfunction2()" value="click" > click</button>
+    <div ng-repeat="item in carRoad">
+
+        <p>{{item.road}} {{item.count}}</p>
+
+    </div>
+
+</div>
+
+

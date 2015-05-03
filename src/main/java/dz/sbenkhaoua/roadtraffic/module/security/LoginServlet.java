@@ -42,6 +42,7 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         if (SecurityUtils.getSubject().isAuthenticated()) {
             resp.sendRedirect(req.getContextPath() + "/home");
+
         } else {
             System.out.println("qsdqsdqsdqsd");
             req.getRequestDispatcher("/login.jsp").forward(req, resp);

@@ -52,18 +52,9 @@
         <dispatcher>INCLUDE</dispatcher>
         <dispatcher>ERROR</dispatcher>
     </filter-mapping>
-    <servlet>
-        <servlet-name>WsChatServlet</servlet-name>
-        <servlet-class>dz.sbenkhaoua.roadtraffic.module.websocket.WsChatServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>WsChatServlet</servlet-name>
-        <url-pattern>/wschat/WsChatServlet</url-pattern>
-    </servlet-mapping>
 
     <welcome-file-list>
-        <welcome-file>login.jsp</welcome-file>
+        <welcome-file>/login.jsp</welcome-file>
     </welcome-file-list>
 
     <display-name>Archetype Created Web Application</display-name>
