@@ -19,6 +19,8 @@
           href="/app-web/resource/dist/img/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="/app-web/resource/dist/img/apple-touch-icon-57-precomposed.png">
     <link href="/app-web/resource/dist/css/patternfly.min.css" rel="stylesheet" media="screen, print">
+    <link rel="stylesheet" href="/app-web/resource/api/font-awesome-4.3.0/css/font-awesome.min.css">
+
 
 
 
@@ -32,6 +34,8 @@
 
     <script src="/app-web/resource/components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/app-web/resource/dist/js/patternfly.min.js"></script>
+
+
 
 <script>
 
@@ -109,21 +113,23 @@
             <li>
                 <a href="basic.html">Basic</a>
             </li>
-            <li>
-                <a href="bootstrap-treeview-2.html">Tree View</a>
-            </li>
+
             <li class="active">
-                <a href="#/dashbord" class="active">Dashboard</a>
+                <a href="#/dashbord" class="active"> <i class="fa fa-tachometer"></i> Tableau Bord</a>
             </li>
             <li>
-                <a href="form.html">Form</a>
+                <a href="#/sumult"> <i
+                    class="fa fa-car"></i>  Simulateur</a>
             </li>
+
             <li>
-                <a href="tab.html">Tab</a>
+                <a href="bootstrap-treeview-2.html"> <i class="fa fa-line-chart"></i> Statistique</a>
             </li>
+
             <li>
-                <a href="typography-2.html">Typography</a>
+                <a href="tab.html"><i class="fa fa-wrench"></i> Parametre</a>
             </li>
+
         </ul>
     </div>
 </nav>
@@ -134,7 +140,7 @@
                 <div class="actions pull-right">
                     <a href="#"><span class="pficon pficon-refresh"></span> Refresh Results</a>
                 </div>
-                <h1>Dashboard</h1>
+
                 <ng-view></ng-view>
             </div>
         </div>
@@ -149,6 +155,11 @@
 <!--dashbord controller-->
 <script
         src="/app-web/pages/d/dashBord/js/dashBordCntrl.js"></script>
+
+<%--Map controller--%>
+<script
+        src="/app-web/pages/d/map/js/mapCntrl.js"></script>
+
 <script type="text/javascript" src="/app-web/app/config/appConfig.js"></script>
 <!--All app cinfig-->
 </body>

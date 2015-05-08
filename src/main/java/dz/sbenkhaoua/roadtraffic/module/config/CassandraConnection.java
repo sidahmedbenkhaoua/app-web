@@ -4,6 +4,7 @@ import com.datastax.driver.core.*;
 import com.datastax.driver.mapping.MappingSession;
 import dz.sbenkhaoua.roadtraffic.module.modules.car.model.Car;
 import dz.sbenkhaoua.roadtraffic.module.modules.intersection.model.Intersection;
+import dz.sbenkhaoua.roadtraffic.module.modules.rdaRecord.model.RdaRecordMaper;
 import dz.sbenkhaoua.roadtraffic.module.modules.road.model.Road;
 
 import java.util.List;
@@ -12,20 +13,16 @@ import java.util.List;
  * Created by sbenkhaoua on 05/04/15.
  */
 public final class CassandraConnection {
-    public static Session session = null;
+    public  Session session ;
     public static final String KEYSPACE = "roadtraffic";
     public static final String TABLE_CAR_DATA = "car";
 
-    public static PreparedStatement insertPstmt = null;
-    public static PreparedStatement selectStmt = null;
-    public static PreparedStatement deleteStmt = null;
-    public static PreparedStatement updateStmt = null;
-    private boolean isDelete=false;
-
-    public static final String USER_DATA_INSERT_STMT = "INSERT INTO " + KEYSPACE + "." + TABLE_CAR_DATA + "(id,car_name,color,insert_date,pos_x,pos_y,send_date,speed)values(?,?,?,?,?,?,?,?)";
+    private boolean isDelete = false;
 
 
-    private static volatile CassandraConnection instance;
+
+
+
     private static MappingSession mappingSession;
 
     public CassandraConnection() {
@@ -37,67 +34,18 @@ public final class CassandraConnection {
         mappingSession = new MappingSession(KEYSPACE, session);
 
 
-        ///  insertPstmt = session.prepare(USER_DATA_INSERT_STMT);
+
 
     }
 
-    /**
-     * Get the only instance of this class.
-     *
-     * @return the single instance.
-     */
-    public static CassandraConnection getInstance() {
-        if (instance == null) {
-            synchronized (CassandraConnection.class) {
-                if (instance == null) {
-                    instance = new CassandraConnection();
-                }
-            }
-        }
-        return instance;
-    }
+
 
 
     public void insertValues(Car car) {
-        // session.execute(insertPstmt.bind(car.getId(),car.getCarName(),car.getColor(),car.getInsertDate(),car.getPosX(),car.getPosY(),car.getSendDate(),car.getSpeed()));
-        // initialize datastax session.
+
 
         mappingSession.save(car);
     }
-
-    public void retriveValues() {
-        try {
-            ResultSet rs = session.execute(selectStmt.bind());
-            if (rs != null) {
-                List<Row> rows = rs.all();
-                if (rows != null) {
-                    for (Row row : rows) {
-                        System.out.println(row);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Exception in select Stament" + e.getMessage());
-        }
-    }
-
-    public void deleteValues() throws Exception {
-        try {
-            session.execute(deleteStmt.bind("Ramu"));
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-
-    public void updateValues() throws Exception {
-        try {
-            session.execute(updateStmt.bind(18L, "Ramu"));
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-
-
     public void insertRoad(Road road) {
 
         mappingSession.save(road);
@@ -119,7 +67,7 @@ public final class CassandraConnection {
         for (Road road : result) {
             mappingSession.delete(road);
         }
-        isDelete=true;
+        isDelete = true;
     }
 
     public void deleteAllIntersRows() {
@@ -129,16 +77,56 @@ public final class CassandraConnection {
         for (Intersection intersection : result) {
             mappingSession.delete(intersection);
         }
-        isDelete=true;
+        isDelete = true;
+    }
+
+    public int getLasteValue() {
+        createIndexType();
+        ResultSet resultSet;
+        resultSet = session.execute("SELECT * FROM rda_record" + " WHERE active = 'true' ;");
+        Row row = resultSet.one();
+
+        return row.getInt("num");
+    }
+
+    public String getLasteIDValue() {
+        createIndexType();
+        ResultSet resultSet;
+        resultSet = session.execute("SELECT * FROM rda_record" + " WHERE active = 'true' ;");
+        Row row = resultSet.one();
+        return row.getString("id");
     }
 
 
-   public void send(){
-       System.out.println("dsqdqsd");
-   }
+    public void createIndexType() {
+        //Query
+        try {
+            String query = "CREATE INDEX name ON rda_record (active);";
+            //Executing the query
+            session.execute(query);
+        } catch (Exception e) {
+            deleteIndexType();
+            getLasteValue();
+        }
+    }
 
 
+    public void deleteIndexType() {
+        String query = "DROP INDEX name;";
+        session.execute(query);
+    }
+
+    public void send() {
+        System.out.println("dsqdqsd");
+    }
+
+    public void saveRdaRecordMaper(RdaRecordMaper rdaRecordMaper) {
+        mappingSession.save(rdaRecordMaper);
+    }
 
 
+    public void edtitLastDefalut(String idLastDefault) {
+        session.execute("UPDATE rda_record set active= 'false' WHERE id = '"+idLastDefault+"';");
 
+    }
 }

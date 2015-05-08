@@ -12,6 +12,12 @@ app.config(['$routeProvider',
             }).
             otherwise({
                 redirectTo: '/dashbord'
+            }).when('/sumult', {
+                templateUrl: 'pages/d/map/index.html',
+                controller: 'mapCntrl'
+            }).
+            otherwise({
+                redirectTo: '/dashbord'
             });
     }]);
 angular.module('roadtrafficapps').config(['$controllerProvider', function($controllerProvider) {

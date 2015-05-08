@@ -29,6 +29,6 @@ public class CarController  extends PoolConfg {
         String dateInsert = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(myTimestamp);
         car.setInsertDate(dateInsert);
         car.setId(PKeyGenerator.get());
-        getINSTANCE().insertValues(car);
+        CarSenderData.send(car);
     }
 }
